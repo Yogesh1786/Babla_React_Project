@@ -1,64 +1,83 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import styles from "./stoppage.module.css";
+
 export function Stoppage(props) {
-  const [stoppageCodes, setStoppageCodes] = useState([]);
+  const [stoppageCodes, setStoppageCodes] = useState(() => {
+    const saved = localStorage.getItem("stoppages");
+    return saved ? JSON.parse(saved) : [];
+  });
   const [filteredStoppageCodes, setFilteredStoppageCodes] = useState([]);
-  const [parentId, setParentId] = useState("0"); // Current parent ID for filtering stoppages
+  const [newValues, setNewValues] = useState("");
+  const [parentId, setParentId] = useState("0");
   const { closeDialog } = props;
 
   useEffect(() => {
-    console.log("I am inside Initial Use Effect");
+    if (!localStorage.getItem("stoppages")) {
+      localStorage.setItem(
+        "stoppages",
+        JSON.stringify([
+          { id: "id1", parentid: "0", name: "Assembly" },
+          { id: "id11", parentid: "id1", name: "Servo A" },
+          { id: "id111", parentid: "id11", name: "Fault" },
+          { id: "id2", parentid: "0", name: "Hookup" },
+          { id: "id3", parentid: "0", name: "Pre-Stress" },
+          { id: "id4", parentid: "0", name: "Measuring Machine" },
+          { id: "id5", parentid: "0", name: "Stacker" },
+          { id: "id51", parentid: "id5", name: "ISL Stacker" },
+          { id: "id511", parentid: "id51", name: "Burrs on links" },
+          { id: "id52", parentid: "id5", name: "OSG Stacker" },
+          { id: "id6", parentid: "0", name: "Other" },
+          { id: "id7", parentid: "0", name: "Component Quality" },
+          { id: "id71", parentid: "id7", name: "ISL" },
+          { id: "id72", parentid: "id7", name: "OSG" },
+          { id: "id73", parentid: "id7", name: "Pins" },
+          { id: "id711", parentid: "id71", name: "Burrs" },
+        ])
+      );
+    }
+  }, []);
 
-    // Static stoppage data (you can replace this with an API call)
-    const stoppages = [
-      { id: "id1", parentid: "0", name: "Assembly" },
-      { id: "id11", parentid: "id1", name: "Servo A" }, 
-      { id: "id111", parentid: "id11", name: "Fault" },
-      { id: "id2", parentid: "0", name: "Hookup" },
-      { id: "id3", parentid: "0", name: "Pre-Stress" },
-      { id: "id4", parentid: "0", name: "Measuring Machine" },
-      { id: "id5", parentid: "0", name: "Stacker" },
-      { id: "id51", parentid: "id5", name: "ISL Stacker" },
-      { id: "id511", parentid: "id51", name: "Burrs on links" },
-      { id: "id52", parentid: "id5", name: "OSG Stacker" },
-      { id: "id6", parentid: "0", name: "Other" },
-      { id: "id7", parentid: "0", name: "Component Quality" },
-      { id: "id71", parentid: "id7", name: "ISL" },
-      { id: "id72", parentid: "id7", name: "OSG" },
-      { id: "id73", parentid: "id7", name: "Pins" },
-      { id: "id711", parentid: "id71", name: "Burrs" },
-    ];
-
-    setStoppageCodes(stoppages);
-
-    var _filteredStoppageCodes = stoppages.filter(
+  useEffect(() => {
+    const _filteredStoppageCodes = stoppageCodes.filter(
       (stoppage) => stoppage.parentid === parentId
     );
-
     setFilteredStoppageCodes(_filteredStoppageCodes);
-  }, []);
+  }, [stoppageCodes, parentId]);
 
   const onSubmit = () => {
     console.log("Submit clicked");
-    // You can handle form submission or other logic here
-    // closeDialog(); // Close the dialog after submitting
   };
 
   const onCancel = () => {
     console.log("Cancel clicked");
-    closeDialog(); // Close the dialog on cancel
+    closeDialog();
   };
 
   const onStoppageClick = (elem) => {
-    console.log("On Stoppage clicked");
-    console.log(elem);
     setParentId(elem.id);
-    var _filteredStoppageCodes = stoppageCodes.filter(
+    const _filteredStoppageCodes = stoppageCodes.filter(
       (stoppage) => stoppage.parentid === elem.id
     );
-
     setFilteredStoppageCodes(_filteredStoppageCodes);
+  };
+
+  const handleChange = (event) => {
+    setNewValues(event.target.value);
+  };
+
+  const handleAddValues = () => {
+    const storedItems = JSON.parse(localStorage.getItem("stoppages")) || [];
+    const temp = {
+      id: "id" + (Math.floor(Math.random() * 90) + 10),
+      name: newValues,
+      parentid: parentId,
+    };
+
+    const newItems = [...storedItems, temp];
+    localStorage.setItem("stoppages", JSON.stringify(newItems));
+    setStoppageCodes(newItems);
+    setNewValues("");
   };
 
   return (
@@ -84,8 +103,8 @@ export function Stoppage(props) {
         </div>
 
         <div>
-            <input type="text" />
-            <button>Add</button>
+          <input onChange={handleChange} type="text" />
+          <button onClick={handleAddValues}>Add</button>
         </div>
 
         <div className={styles.footerBtns}>
