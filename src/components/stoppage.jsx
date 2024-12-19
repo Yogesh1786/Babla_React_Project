@@ -118,7 +118,7 @@ export function Stoppage(props) {
                   key={elem.id}
                 >
                   {elem.name}
-                  <IoClose  className={styles.closeButton}/>
+                  <IoClose className={styles.closeButton}/>
                 </button>
               );
             })}
