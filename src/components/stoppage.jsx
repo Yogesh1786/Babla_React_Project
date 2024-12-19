@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import styles from "./stoppage.module.css";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { IoClose } from "react-icons/io5";
 
 export function Stoppage(props) {
   const [stoppageCodes, setStoppageCodes] = useState(() => {
@@ -62,12 +64,23 @@ export function Stoppage(props) {
     setFilteredStoppageCodes(_filteredStoppageCodes);
   };
 
+  const handleBack = () => {
+    const currentStoppage = stoppageCodes.find(
+      (stoppage) => stoppage.id === parentId
+    );
+    setParentId(currentStoppage ? currentStoppage.parentid : "0");
+  };
+
   const handleChange = (event) => {
     setNewValues(event.target.value);
   };
 
-  const handleAddValues = () => {
+  const handleAddValues = (event) => {
     const storedItems = JSON.parse(localStorage.getItem("stoppages")) || [];
+    if (newValues.trim() === "") {
+      alert("Input cannot be empty. Please enter a value."); // Alert the user
+      return; // Stop further execution if the input is empty
+    }
     const temp = {
       id: "id" + (Math.floor(Math.random() * 90) + 10),
       name: newValues,
@@ -78,12 +91,20 @@ export function Stoppage(props) {
     localStorage.setItem("stoppages", JSON.stringify(newItems));
     setStoppageCodes(newItems);
     setNewValues("");
+    event.target.value = ""
   };
 
   return (
     <div className={styles.mainDiv}>
       <div className={styles.childDiv}>
         <div className={styles.heading}>
+          {parentId !== "0" && (
+            <IoMdArrowRoundBack
+              className={styles.backButton}
+              onClick={handleBack}
+            />
+          )}
+          
           <h2>Stoppage / Down Reason</h2>
         </div>
 
@@ -97,14 +118,23 @@ export function Stoppage(props) {
                   key={elem.id}
                 >
                   {elem.name}
+                  <IoClose  className={styles.closeButton}/>
                 </button>
               );
             })}
         </div>
 
-        <div>
-          <input onChange={handleChange} type="text" />
-          <button onClick={handleAddValues}>Add</button>
+        <div className={styles.inputBox}>
+          <input
+            onChange={handleChange}
+            type="text"
+            placeholder="Enter a value..."
+            value={newValues}
+            className={styles.inputField}
+          />
+          <button onClick={handleAddValues} className={styles.addButton}>
+            Add
+          </button>
         </div>
 
         <div className={styles.footerBtns}>

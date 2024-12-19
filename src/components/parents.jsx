@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Dialog from "@mui/material/Dialog"; // Importing Dialog from Material-UI
 import Stoppage from "./stoppage";
+import styles from "./parent.module.css";
 
 export function Parents() {
   const [openStoppageDialog, setOpenStoppageDialog] = useState(false);
@@ -18,7 +19,7 @@ export function Parents() {
   return (
     <div>
       <div>
-        <h2>I am the Stoppage component</h2>
+        <h2>I am the Parent component.</h2>
         <button onClick={openStoppage}>Dialog-Popup</button>
       </div>
       
