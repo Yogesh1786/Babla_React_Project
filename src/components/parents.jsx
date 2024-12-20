@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Dialog from "@mui/material/Dialog"; // Importing Dialog from Material-UI
+import Dialog from "@mui/material/Dialog";
 import Stoppage from "./stoppage";
-import styles from "./parent.module.css";
+import styles from "./parents.module.css";
 import FormPage from "./formPage";
 
 export function Parents() {
@@ -40,12 +40,12 @@ export function Parents() {
 
       <Dialog
         open={openStoppageDialog}
-        onClose={closeStoppage} // Handles dialog close
+        onClose={closeStoppage}
         maxWidth="lg"
         PaperProps={{
           style: {
             overflow: "visible",
-            minWidth: "800px", // Adjust width as needed
+            minWidth: "800px",
             minHeight: "680px",
             maxWidth: "800px",
           },
@@ -57,12 +57,12 @@ export function Parents() {
       </Dialog>
       <Dialog
         open={openForm}
-        onClose={closeForm} // Handles dialog close
+        onClose={closeForm}
         maxWidth="lg"
         PaperProps={{
           style: {
             overflow: "visible",
-            minWidth: "800px", // Adjust width as needed
+            minWidth: "800px",
             minHeight: "680px",
             maxWidth: "800px",
           },

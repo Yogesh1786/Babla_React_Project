@@ -1,13 +1,9 @@
-/* Parents.css */
-
-/* Style for the main container */
 div {
     font-family: Arial, sans-serif;
     text-align: center;
     margin-top: 20px;
   }
   
-  /* Heading style */
   h2 {
     color: #333;
     font-size: 2rem;
@@ -15,7 +11,6 @@ div {
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   }
   
-  /* Button styling */
   button {
     background-color: #007bff;
     color: #fff;
@@ -36,18 +31,15 @@ div {
     transform: scale(0.95);
   }
   
-  /* Dialog content styling */
   .MuiDialog-paper {
     border-radius: 10px !important;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2) !important;
   }
   
-  /* Dialog inner content */
   .MuiDialog-paper > div {
     padding: 20px;
   }
   
-  /* Add smooth fade animation for the dialog */
   @keyframes fadeIn {
     from {
       opacity: 0;

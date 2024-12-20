@@ -22,17 +22,17 @@ function FormPage({ closeDialog }) {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    console.log("Form submitted:", formData);
     // You can also add logic to send this data to an API
     // alert(`Form submitted with Name: ${formData.name}`);
     // setFormData({ name: "", email: "", message: "",date: ""}); // Reset form
-    console.log("Form submitted:", formData);
     setJsonData(formData)
-    setFormData({
-      name: "",
-      email: "",
-      message: "",
-      date: "",
-    });
+    // setFormData({
+    //   name: "",
+    //   email: "",
+    //   message: "",
+    //   date: "",
+    // });
   };
 
   const onCancel = () => {
