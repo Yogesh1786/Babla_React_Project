@@ -94,6 +94,13 @@ export function Stoppage(props) {
     event.target.value = ""
   };
 
+  const handleClose = (e, id) => {
+    e.stopPropagation();
+    const updatedStoppages = stoppageCodes.filter((stoppage) => stoppage.id !== id);
+    setStoppageCodes(updatedStoppages); 
+    localStorage.setItem("stoppages", JSON.stringify(updatedStoppages));
+  };
+  
   return (
     <div className={styles.mainDiv}>
       <div className={styles.childDiv}>
@@ -118,7 +125,9 @@ export function Stoppage(props) {
                   key={elem.id}
                 >
                   {elem.name}
-                  <IoClose className={styles.closeButton}/>
+                  <IoClose className={styles.closeButton}
+                  onClick={(e) => handleClose(e, elem.id)}
+                  />
                 </button>
               );
             })}
@@ -128,7 +137,7 @@ export function Stoppage(props) {
           <input
             onChange={handleChange}
             type="text"
-            placeholder="Enter a value..."
+            placeholder="Enter The Value..."
             value={newValues}
             className={styles.inputField}
           />

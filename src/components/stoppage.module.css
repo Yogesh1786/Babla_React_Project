@@ -42,8 +42,9 @@
 
 .closeButton {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 1px;
+  right: 1px;
+  /* left: 300px; */
   font-size: 20px;
   color: white;
   cursor: pointer;
