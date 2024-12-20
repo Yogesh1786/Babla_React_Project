@@ -63,3 +63,10 @@ div {
     animation: fadeIn 0.3s ease-out;
   }
   
+  .btnClick{
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
